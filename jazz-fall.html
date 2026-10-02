@@ -123,7 +123,13 @@ let lockT,lockResets,lowest,gravT,softT,lastRot,clearing,mute=false,ac,last=0;
 try{best=+localStorage.getItem('stackfall-best')||0}catch(e){}
 $('best').textContent=best;
 
-
+function snd(f,d=.08,type='square',v=.035,delay=0){
+  if(mute)return;
+  try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();
+    const o=ac.createOscillator(),g=ac.createGain(),t=ac.currentTime+delay;
+    o.type=type;o.frequency.value=f;g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);
+    o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+d);}catch(e){}
+}
 function toast(t){const e=$('toast');e.textContent=t;e.classList.remove('on');void e.offsetWidth;e.classList.add('on')}
 
 // ---- core helpers
