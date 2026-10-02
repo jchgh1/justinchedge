@@ -4,13 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="A falling-block game from JazzClub Films.">
-<title>Jazz Fall — JazzClub Films</title>
+<title>Jazz Fall</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{color-scheme:light;--accent:#506956;--muted:#68736c;--rule:#d7ded9;--dark:#111214;--lucida:'Lucida Sans','Lucida Sans Regular','Lucida Grande','Lucida Sans Unicode',Geneva,Verdana,sans-serif}
 body{min-height:100svh;display:flex;flex-direction:column;background:#fff;color:#111;font-family:Arial,Helvetica,sans-serif;user-select:none;-webkit-user-select:none;touch-action:manipulation;overflow-x:hidden}
 a:focus-visible,button:focus-visible{outline:1px solid var(--accent);outline-offset:5px}
-.site-header{position:absolute;top:32px;left:40px;right:40px;height:70px;z-index:5}
 .site-brand{position:absolute;top:0;left:0;width:max-content;color:#111;line-height:.85;text-decoration:none}
 .site-brand-text{display:block;font-family:var(--lucida);font-size:2rem;font-weight:900}
 .site-brand-films{display:block;width:100%;margin-top:8px;font-family:Georgia,'Times New Roman',serif;font-size:.8rem;font-style:italic;letter-spacing:.35em;text-align:center}
@@ -20,7 +19,7 @@ a:focus-visible,button:focus-visible{outline:1px solid var(--accent);outline-off
 .site-menu-links{display:none;position:absolute;top:36px;right:65px;width:max-content;text-align:right}
 .site-menu-links a{display:block;margin-bottom:14px;color:#111;font-family:var(--lucida);font-size:.7rem;font-weight:700;letter-spacing:.12em;text-decoration:none;transition:color .3s ease}
 .site-menu.is-open .site-menu-links{display:block}
-main{flex:1;display:flex;align-items:center;justify-content:center;padding:108px 20px 28px}
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:0 20px 28px}
 .game{display:grid;grid-template-columns:minmax(80px,170px) auto minmax(80px,170px);gap:18px 48px;position:relative;isolation:isolate;align-items:stretch}
 .spacer{grid-column:1;grid-row:1}
 #stage{grid-column:2;grid-row:1}
@@ -35,6 +34,13 @@ main{flex:1;display:flex;align-items:center;justify-content:center;padding:108px
 @media (max-width:1199px){.game:before,.game:after{display:none}}
 .side > div,.stats{border:1px solid rgba(17,18,20,.14);padding:14px 16px;background:rgba(255,255,255,.38)}
 .side > div canvas{margin-top:2px}
+  .back {
+    display: inline-block;
+    color: var(--ink-soft);
+    font-size: 14px;
+    text-decoration: none;
+    margin-bottom: 60px;
+  }
 #board{border:1px solid rgba(255,255,255,.18)}
 .col{display:flex;flex-direction:column;gap:14px}
 .side > div:first-child{flex:1;min-height:0}
@@ -58,24 +64,14 @@ main{flex:1;display:flex;align-items:center;justify-content:center;padding:108px
 #pad{display:none;gap:8px;flex-wrap:wrap;justify-content:center;max-width:360px;margin:0 auto 28px}
 #pad button{min-width:56px;min-height:50px;border:1px solid var(--rule);background:#fff;color:#111;font-family:var(--lucida);font-size:.8rem;font-weight:700;touch-action:none}
 @media (pointer:coarse){#pad{display:flex}#board{height:min(calc(100svh - 430px),1000px)}}
-@media (max-width:600px){.site-header{top:20px;left:20px;right:20px;height:60px}.site-brand-text{font-size:1.5rem}.site-brand-films{margin-top:7px;font-size:.7rem}.site-menu{gap:12px}.site-menu-button,.site-about{font-size:.5rem;letter-spacing:.06em}.site-menu-links{top:30px;right:52px}main{padding:96px 12px 24px}.game{grid-template-columns:auto minmax(64px,90px);gap:16px 14px}.spacer{display:none}#board{height:auto;min-height:0;width:max(190px,min(calc(100vw - 130px),calc((100svh - 400px)/2)))}#stage{grid-column:1}.side{grid-column:2}.stats{grid-column:1;grid-row:2;padding:10px 12px;flex-direction:row}.stats .num,.stats .small{font-size:1.05rem}}
+@media (max-width:10px){.site-header{top:20px;left:20px;right:20px;height:60px}.site-brand-text{font-size:1.5rem}.site-brand-films{margin-top:7px;font-size:.7rem}.site-menu{gap:12px}.site-menu-button,.site-about{font-size:.5rem;letter-spacing:.06em}.site-menu-links{top:30px;right:52px}main{padding:96px 12px 24px}.game{grid-template-columns:auto minmax(64px,90px);gap:16px 14px}.spacer{display:none}#board{height:auto;min-height:0;width:max(190px,min(calc(100vw - 130px),calc((100svh - 400px)/2)))}#stage{grid-column:1}.side{grid-column:2}.stats{grid-column:1;grid-row:2;padding:10px 12px;flex-direction:row}.stats .num,.stats .small{font-size:1.05rem}}
 footer{display:flex;align-items:center;justify-content:center;gap:12px;padding:28px 24px 34px;border-top:1px solid rgba(0,0,0,.06);color:#444;font-family:Georgia,'Times New Roman',serif;font-size:.75rem;letter-spacing:.08em}
 .footer-heron{display:block;flex:0 0 auto;width:34px;height:24px;color:#252a26}
 @media (prefers-reduced-motion:reduce){#toast.on{animation:none;opacity:1}*{transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
-<header class="site-header">
-  <a class="site-brand" href="index.html" aria-label="JazzClub Films home"><span class="site-brand-text">JAZZCLUB</span><span class="site-brand-films">films</span></a>
-  <div class="site-menu">
-    <button class="site-menu-button" type="button" aria-label="Open other productions" aria-expanded="false" aria-controls="site-menu-links">OTHER PRODUCTIONS</button>
-    <a class="site-about" href="about.html">ABOUT</a>
-    <nav class="site-menu-links" id="site-menu-links" aria-label="Other productions">
-      <a href="search-for-sidequests.html">THE SEARCH FOR SIDEQUESTS</a>
-      <a href="filmarchive.html">ALL SHOWS</a>
-    </nav>
-  </div>
-</header>
+  <a href="index.html" class="back">←back to justinchedge.com</a>
 <main>
   <div>
     <div class="game">
@@ -103,15 +99,7 @@ footer{display:flex;align-items:center;justify-content:center;gap:12px;padding:2
     </div>
   </div>
 </main>
-<footer><svg class="footer-heron" width="680" height="480" viewBox="0 0 680 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Heron">
-  <g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M330 358 L326 415"/><path d="M326 415 L318 428 M326 415 L326 430 M326 415 L334 428"/>
-    <path d="M355 356 L352 410"/><path d="M352 410 L344 423 M352 410 L352 425 M352 410 L360 423"/>
-    <path d="M235 315 Q270 245 340 240 Q400 235 415 275 Q422 315 395 340 Q335 362 270 340 L235 315 Z"/>
-    <path d="M340 240 Q315 180 340 140 Q360 105 410 100 Q455 98 465 140 Q472 185 450 220 Q432 250 458 285 Q478 315 472 345"/>
-    <ellipse cx="480" cy="350" rx="22" ry="17"/><path d="M500 348 Q528 345 542 355 Q528 358 500 358"/>
-    <circle cx="488" cy="345" r="2" fill="currentColor" stroke="none"/><path d="M345 255 Q300 270 292 305 Q305 328 348 318"/>
-  </g></svg>JazzClub Films © 2026</footer>
+
 <script>
 (()=>{const m=document.querySelector('.site-menu'),b=document.querySelector('.site-menu-button');
 const set=o=>{m.classList.toggle('is-open',o);b.setAttribute('aria-expanded',String(o));b.setAttribute('aria-label',o?'Close other productions':'Open other productions')};
