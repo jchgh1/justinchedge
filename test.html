@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>JazzClub Films</title>
+<style>
+:root{
+  --bg:#0d1311; --fg:#e4e2da; --dim:rgba(228,226,218,.3); --brass:#c9a15a; --lamp:rgba(201,161,90,.09);
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --sans:ui-sans-serif,"Helvetica Neue",Arial,sans-serif;
+  --ease:cubic-bezier(.7,0,.2,1);
+}
+body.paper{--bg:#d8dbd0;--fg:#111612;--dim:rgba(17,22,18,.32);--lamp:rgba(255,255,255,.35)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--serif);transition:background 1.2s ease,color 1.2s ease;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a,button{color:inherit;font:inherit;background:none;border:0;text-decoration:none;cursor:pointer;text-align:left}
+:focus-visible{outline:1px solid var(--brass);outline-offset:6px;border-radius:2px}
+ul{list-style:none}
+.sans{font-family:var(--sans);font-size:.78rem;letter-spacing:.01em}
+
+/* lamp: a soft pool of light that follows the cursor */
+#lamp{position:fixed;left:0;top:0;width:70vmax;height:70vmax;margin:-35vmax 0 0 -35vmax;border-radius:50%;
+  background:radial-gradient(closest-side,var(--lamp),transparent);pointer-events:none;z-index:0;will-change:transform}
+
+/* nav */
+nav{position:fixed;z-index:20;top:0;right:0;padding:2.2vh 4vw;display:flex;gap:2.2rem;font-family:var(--sans);font-size:.82rem}
+nav a{position:relative;padding:.5rem 0;opacity:.55;transition:opacity .4s}
+nav a.on,nav a:hover{opacity:1}
+#dot{position:absolute;left:0;bottom:-2px;width:5px;height:5px;border-radius:50%;background:var(--brass);transition:transform .6s var(--ease)}
+#mark{position:fixed;z-index:20;top:2.2vh;left:5vw;padding:.5rem 0;font-family:var(--sans);font-size:.82rem;opacity:0;transition:opacity .5s;pointer-events:none}
+#mark.on{opacity:1;pointer-events:auto}
+
+/* hero */
+.hero{position:relative;z-index:1;min-height:92svh;padding:0 5vw 5vh;display:flex;flex-direction:column;justify-content:flex-end}
+h1{font-weight:400;font-size:clamp(3.6rem,16.5vw,17rem);line-height:.84;letter-spacing:-.05em}
+h1 span{display:block;overflow:hidden;padding-bottom:.08em}
+h1 span i{display:block;font-style:normal;animation:rise 1.4s var(--ease) both}
+h1 span:nth-child(2){padding-left:.9em}
+h1 span:nth-child(2) i{animation-delay:.14s}
+@keyframes rise{from{transform:translateY(105%)}}
+.hero p{margin:4vh 0 0 auto;width:min(23ch,46%);font-size:1.05rem;line-height:1.35;opacity:.7;animation:fade 1.6s .8s both}
+@keyframes fade{from{opacity:0}}
+
+/* films */
+section{position:relative;z-index:1}
+#films{padding:4vh 5vw 26vh}
+#idx a{display:grid;grid-template-columns:1fr 14ch 5ch;gap:2rem;align-items:baseline;padding:.12em 0;transition:opacity .5s,transform .7s var(--ease)}
+#idx .t{font-size:clamp(2rem,6.4vw,6.8rem);letter-spacing:-.04em;line-height:1.02}
+#idx .m{opacity:.6}
+#idx .y{text-align:right;opacity:.6}
+#idx:hover a{opacity:.16}
+#idx:hover a:hover,#idx:focus-within a:focus-visible{opacity:1;transform:translateX(1.4vw)}
+#idx a.off{opacity:.1}
+#idx .th{display:none}
+.float{position:fixed;left:0;top:0;width:28vw;aspect-ratio:16/10;z-index:5;pointer-events:none;will-change:transform;
+  clip-path:inset(0 0 100% 0);transition:clip-path .7s var(--ease)}
+.float.on{clip-path:inset(0)}
+.float div{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity .35s}
+.float div.on{opacity:1}
+
+/* filmmakers */
+#makers{padding:0 5vw 30vh}
+.mk{margin-left:var(--o);width:fit-content;max-width:100%;padding:2.2vh 0}
+.mk>button{font-size:clamp(2.4rem,7.4vw,7.6rem);letter-spacing:-.045em;line-height:1;position:relative;transition:transform .8s var(--ease),color .4s}
+.mk>button:hover{transform:translateX(-1.6vw);color:var(--brass)}
+.mk p{margin-top:.8rem;opacity:.6;display:flex;flex-wrap:wrap;gap:.3rem 1.4rem}
+.mk p a{transition:color .3s,opacity .3s}
+.mk p a:hover{color:var(--brass);opacity:1}
+.mk:nth-child(1){--o:0}.mk:nth-child(2){--o:24vw}.mk:nth-child(3){--o:8vw}.mk:nth-child(4){--o:38vw}.mk:nth-child(5){--o:15vw}
+
+/* photographs */
+#photos{padding-bottom:26vh}
+.strip{display:flex;gap:4vw;align-items:center;height:78vh;overflow-x:auto;padding:0 5vw;scrollbar-width:none;cursor:grab;scroll-snap-type:x proximity}
+.strip::-webkit-scrollbar{display:none}
+.strip.drag{cursor:grabbing;scroll-snap-type:none;scroll-behavior:auto}
+.strip figure{flex:none;transition:opacity .6s,transform .8s var(--ease);scroll-snap-align:center;user-select:none}
+.strip:hover figure{opacity:.28}
+.strip:hover figure:hover{opacity:1;transform:translateY(-1.2vh)}
+.ph{height:var(--h);aspect-ratio:var(--r);overflow:hidden;position:relative}
+.im{position:absolute;top:0;bottom:0;left:-14%;width:128%;background-size:cover;background-position:center;will-change:transform}
+figcaption{margin-top:1rem;opacity:.65;max-width:28ch}
+
+/* writing */
+#writing{padding:14vh 5vw 14vh}
+.es{padding:1.6vh 0}
+.es>button{display:flex;width:100%;justify-content:space-between;align-items:baseline;gap:2rem}
+.es h3{font-weight:400;font-size:clamp(1.9rem,5.2vw,5.4rem);letter-spacing:-.04em;line-height:1.05;position:relative;transition:transform .8s var(--ease)}
+.es h3::before{content:"";position:absolute;left:-1.4rem;top:.55em;width:7px;height:7px;border-radius:50%;background:var(--brass);transform:scale(0);transition:transform .6s var(--ease)}
+.es.on h3,.es>button:hover h3{transform:translateX(2.2rem)}
+.es.on h3::before{transform:scale(1)}
+.es .a{opacity:.6;white-space:nowrap}
+.body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .9s var(--ease)}
+.es.on .body{grid-template-rows:1fr}
+.body>div{overflow:hidden}
+.body p{margin:2vh 0 1vh 2.2rem;max-width:56ch;font-size:1.28rem;line-height:1.55}
+footer{position:relative;z-index:1;padding:0 5vw 8vh}
+
+/* film view */
+#film{position:fixed;inset:0;z-index:50;visibility:hidden;pointer-events:none}
+#film.on{visibility:visible;pointer-events:auto}
+#stage{position:fixed;background-size:cover;background-position:center;transition:left .9s var(--ease),top .9s var(--ease),width .9s var(--ease),height .9s var(--ease)}
+#stage::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 45%,rgba(0,0,0,.72));opacity:0;transition:opacity .8s}
+#film.in #stage::after{opacity:1}
+#fi{position:absolute;left:5vw;right:5vw;bottom:6vh;color:#eeece4;opacity:0;transform:translateY(2vh);transition:opacity .6s,transform .8s var(--ease)}
+#film.in #fi{opacity:1;transform:none;transition-delay:.55s}
+#fi h3{font-weight:400;font-size:clamp(2.6rem,9vw,9.5rem);letter-spacing:-.05em;line-height:.95}
+#fi .d{display:flex;justify-content:space-between;gap:2rem;align-items:baseline;margin-top:2.2vh;flex-wrap:wrap}
+#fi p{max-width:44ch;font-size:1.2rem;line-height:1.4}
+#fi .sans{opacity:.75}
+#x{position:absolute;top:2.2vh;right:4vw;z-index:2;color:#eeece4;font-family:var(--sans);font-size:.82rem;padding:.5rem 0;opacity:0;transition:opacity .5s .5s}
+#film.in #x{opacity:1}
+
+@media (max-width:1024px){
+  #idx a{grid-template-columns:1fr 12ch 5ch;gap:1rem}
+  .mk:nth-child(2){--o:14vw}.mk:nth-child(4){--o:22vw}
+}
+@media (max-width:760px){
+  nav{top:auto;bottom:0;left:0;right:0;justify-content:space-between;padding:1.4vh 6vw calc(1.4vh + env(safe-area-inset-bottom));background:linear-gradient(transparent,var(--bg) 60%)}
+  #dot{bottom:auto;top:.15rem}
+  #mark{display:none}
+  .hero{min-height:82svh}
+  .hero p{width:60%;margin-top:3vh}
+  h1 span:nth-child(2){padding-left:.5em}
+  #films{padding-bottom:18vh}
+  #idx a{grid-template-columns:1fr 26vw;grid-template-areas:"t th" "m th";gap:.2rem 1rem;padding:1.4vh 0;align-items:start}
+  #idx .t{grid-area:t;font-size:2.4rem}
+  #idx .m{grid-area:m}
+  #idx .y{display:none}
+  #idx .th{display:block;grid-area:th;aspect-ratio:4/3;background-size:cover;background-position:center}
+  #idx:hover a{opacity:1}
+  .mk{margin-left:calc(var(--o)*.35)!important}
+  .mk:nth-child(n){--o:0}.mk:nth-child(even){--o:18vw}
+  .strip{height:70vh}
+  .es .a{display:none}
+  .es h3::before{left:-1rem}
+  .es.on h3,.es>button:hover h3{transform:translateX(1.2rem)}
+  .body p{margin-left:1.2rem;font-size:1.12rem}
+  footer{padding-bottom:14vh}
+}
+@media (hover:none){.float{display:none}#lamp{display:none}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:.01s!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div id="lamp"></div>
+<a id="mark" href="#top" class="sans">JazzClub Films</a>
+<nav aria-label="Archive">
+  <a href="#films" data-s="films">Films</a>
+  <a href="#makers" data-s="makers">Filmmakers</a>
+  <a href="#photos" data-s="photos">Photographs</a>
+  <a href="#writing" data-s="writing">Writing</a>
+  <i id="dot"></i>
+</nav>
+
+<header class="hero" id="top">
+  <h1><span><i>JazzClub</i></span><span><i>Films</i></span></h1>
+  <p>An independent film archive: films, filmmakers, photographs and writing.</p>
+</header>
+
+<main>
+  <section id="films" aria-label="Films"><ul id="idx"></ul></section>
+  <section id="makers" aria-label="Filmmakers"></section>
+  <section id="photos" aria-label="Photographs"><div class="strip" id="strip"></div></section>
+  <section id="writing" aria-label="Writing"></section>
+</main>
+<footer class="sans" style="position:relative;z-index:1">archive@jazzclub.film</footer>
+
+<div class="float" id="float" aria-hidden="true"></div>
+
+<div id="film" role="dialog" aria-modal="true" aria-label="Film">
+  <div id="stage"></div>
+  <button id="x">Close</button>
+  <div id="fi"></div>
+</div>
+
+<script>
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+
+/* ---------- Content ---------- */
+const F=[
+ {t:"Blue Room Sessions",d:"Ines Varga",y:1968,m:42,s:"16mm, black and white",x:"A quartet rehearses in a basement. The camera never leaves the room.",p:["#1b2b3a","#080c10","#8fbcd6"],k:"window"},
+ {t:"Room 9",d:"Lucien Bell",y:1957,m:33,s:"35mm, black and white",x:"One apartment, one radio, a night that will not end.",p:["#2a2622","#0a0908","#e0c99a"],k:"door"},
+ {t:"Night Tram",d:"Lucien Bell",y:1961,m:28,s:"35mm, black and white",x:"The last line of the city, seen from the last seat.",p:["#14222b","#05090c","#9fc2cf"],k:"cone"},
+ {t:"Intermission",d:"Ines Varga",y:1974,m:9,s:"16mm, colour",x:"Nine minutes of an audience waiting for the film to resume.",p:["#3a1d1a","#0e0605","#e8a06a"],k:"cone"},
+ {t:"Salt Winter",d:"Tomás Ferreira",y:1983,m:96,s:"35mm, colour",x:"A fishing town closes for the season and does not say why.",p:["#3b4a4d","#10181a","#dfe8e4"],k:"horizon"},
+ {t:"The Long Interval",d:"Tomás Ferreira",y:1991,m:84,s:"35mm, colour",x:"Two musicians, twenty years apart, in the same hotel corridor.",p:["#3d2f1c","#0f0b06","#efc36f"],k:"door"},
+ {t:"Hands",d:"Amara Osei",y:1994,m:17,s:"16mm, colour",x:"A tailor, a pianist, a butcher. Only their hands are shown.",p:["#2e2a3a","#0a0910","#c8b6e6"],k:"window"},
+ {t:"Ash and Brass",d:"Amara Osei",y:2001,m:58,s:"Super 16, colour",x:"A marching band rehearses after the funeral of its leader.",p:["#40261a","#100804","#f0b070"],k:"cone"},
+ {t:"Late Snow on the Pier",d:"Hana Mizuno",y:2006,m:71,s:"Digital, colour",x:"Fourteen long shots of one pier over one winter.",p:["#4a5560","#141a1f","#eef2f4"],k:"horizon"}
+];
+const M=[
+ {n:"Ines Varga",l:"1931–2009"},{n:"Tomás Ferreira",l:"1947–"},{n:"Lucien Bell",l:"1924–1988"},{n:"Amara Osei",l:"1959–"},{n:"Hana Mizuno",l:"1972–"}
+];
+const P=[
+ {c:"Cellar door, Lisbon, 1979",b:"Tomás Ferreira",h:"52vh",r:".78",p:["#3a3a38","#0b0b0a","#e9e3d3"],k:"door",a:"flex-start"},
+ {c:"Rehearsal, 1967",b:"Ines Varga",h:"40vh",r:"1.5",p:["#2c2e30","#090a0b","#dfe4e6"],k:"window",a:"flex-end"},
+ {c:"Projectionist, Coimbra",b:"Tomás Ferreira",h:"60vh",r:".7",p:["#33312e","#0a0a09","#efe6d0"],k:"cone",a:"center"},
+ {c:"Set of Room 9, 1957",b:"Lucien Bell",h:"44vh",r:"1.25",p:["#2b2b2b","#080808","#e5e0d4"],k:"horizon",a:"flex-start"},
+ {c:"Tailor's shop, Accra",b:"Amara Osei",h:"56vh",r:".8",p:["#363433","#0b0a0a","#eee6da"],k:"door",a:"flex-end"},
+ {c:"Pier, February",b:"Hana Mizuno",h:"38vh",r:"1.8",p:["#3a3f42","#0c0e0f","#f1f4f4"],k:"horizon",a:"center"}
+];
+const E=[
+ {t:"The held shot",a:"Hana Mizuno",x:"A shot held past the point of comfort stops being about its subject. It becomes about the person watching, and how long they are willing to stay."},
+ {t:"Notes on Room 9",a:"Lucien Bell",x:"Written in 1958, a year after every festival that saw the film turned it down. The radio, Bell says, was the only actor he trusted."},
+ {t:"Photographing the interval",a:"Tomás Ferreira",x:"The best pictures from a set are made between takes, when nobody is being looked at and everybody is still in character."},
+ {t:"Film stock and forgetting",a:"Amara Osei",x:"Prints fade unevenly. What we remember of a film is sometimes only what the emulsion kept."}
+];
+
+/* ---------- Placeholder stills (generated, no external images) ---------- */
+function scene(k,i,c){
+  const x=180+(i*137)%440;
+  if(k==="window")return `<rect x="${x-70}" y="60" width="140" height="260" fill="${c}" filter="url(#bl)" opacity=".8"/><rect x="${x-46}" y="84" width="92" height="212" fill="${c}" opacity=".9"/><path d="M${x-32} 500q0-130 32-130t32 130z" fill="#000" opacity=".85"/><circle cx="${x}" cy="350" r="17" fill="#000" opacity=".85"/>`;
+  if(k==="cone")return `<polygon points="${x},0 ${x-170},500 ${x+170},500" fill="${c}" opacity=".5" filter="url(#bl)"/><ellipse cx="${x}" cy="472" rx="150" ry="22" fill="${c}" opacity=".6" filter="url(#bl)"/><circle cx="${x}" cy="420" r="16"/><path d="M${x-26} 486q0-56 26-56t26 56z"/>`;
+  if(k==="horizon")return `<rect y="268" width="800" height="28" fill="${c}" opacity=".7" filter="url(#bl)"/><rect y="282" width="800" height="2" fill="${c}"/><rect y="284" width="800" height="216" fill="#000" opacity=".4"/><rect x="${x}" y="238" width="5" height="44"/>`;
+  return `<rect x="${x-40}" y="40" width="80" height="460" fill="${c}" filter="url(#bl)" opacity=".7"/><rect x="${x-30}" y="60" width="60" height="440" fill="${c}"/><rect x="${x-9}" y="232" width="18" height="268"/><circle cx="${x}" cy="215" r="11"/>`;
+}
+function bg(o,i){
+  const [a,b,c]=o.p;
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient><filter id="bl"><feGaussianBlur stdDeviation="20"/></filter><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2"/><feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 -.4"/></filter></defs><rect width="800" height="500" fill="url(#g)"/>${scene(o.k,i,c)}<rect width="800" height="500" filter="url(#n)" opacity=".2"/></svg>`;
+  return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+}
+
+/* ---------- Build ---------- */
+const idx=$("#idx"), flt=$("#float");
+F.forEach((f,i)=>{
+  const li=document.createElement("li");
+  li.innerHTML=`<a href="#" data-i="${i}"><span class="t">${f.t}</span><span class="m sans">${f.d}</span><span class="y sans">${f.y}</span><span class="th" style="background-image:${bg(f,i)}"></span></a>`;
+  idx.appendChild(li);
+  const d=document.createElement("div");d.style.backgroundImage=bg(f,i);flt.appendChild(d);
+});
+const rows=$$("#idx a"), fdivs=$$("#float div");
+
+$("#makers").innerHTML=M.map(m=>`<div class="mk"><button data-n="${m.n}">${m.n}</button><p class="sans">${F.map((f,i)=>f.d===m.n?`<a href="#" data-i="${i}">${f.t}, ${f.y}</a>`:"").join("")}</p></div>`).join("");
+
+$("#strip").innerHTML=P.map((p,i)=>`<figure style="align-self:${p.a}"><div class="ph" style="--h:${p.h};--r:${p.r}"><div class="im" style="background-image:${bg(p,i+3)}"></div></div><figcaption class="sans">${p.c}<br>${p.b}</figcaption></figure>`).join("");
+
+$("#writing").innerHTML=E.map(e=>`<div class="es"><button aria-expanded="false"><h3>${e.t}</h3><span class="a sans">${e.a}</span></button><div class="body"><div><p>${e.x}</p></div></div></div>`).join("");
+
+/* ---------- Moment 1: the index. A still follows the cursor with weight ---------- */
+let mx=innerWidth/2,my=innerHeight/2,fx=mx,fy=my,lx=mx,ly=my,fr=0,lampx=mx,lampy=my;
+addEventListener("pointermove",e=>{mx=e.clientX;my=e.clientY},{passive:true});
+const lamp=$("#lamp");
+(function tick(){
+  fx+=(mx-fx)*.13;fy+=(my-fy)*.13;
+  fr+=(clamp((mx-fx)*.3,-9,9)-fr)*.12;
+  lampx+=(mx-lampx)*.05;lampy+=(my-lampy)*.05;
+  flt.style.transform=`translate3d(${fx+40}px,${fy}px,0) translateY(-50%) rotate(${fr}deg)`;
+  lamp.style.transform=`translate3d(${lampx}px,${lampy}px,0)`;
+  requestAnimationFrame(tick);
+})();
+idx.addEventListener("pointerover",e=>{
+  const a=e.target.closest("a");if(!a||e.pointerType==="touch")return;
+  const i=+a.dataset.i;fdivs.forEach((d,j)=>d.classList.toggle("on",j===i));flt.classList.add("on");
+});
+idx.addEventListener("pointerleave",()=>flt.classList.remove("on"));
+
+/* ---------- Moment 2: a film opens from where it was ---------- */
+const film=$("#film"),stage=$("#stage"),fi=$("#fi");let cur=-1;
+function box(r,anim){
+  if(!anim)stage.style.transition="none";
+  stage.style.left=r.left+"px";stage.style.top=r.top+"px";stage.style.width=r.width+"px";stage.style.height=r.height+"px";
+  if(!anim){stage.offsetHeight;stage.style.transition="";}
+}
+function openFilm(i){
+  cur=i;const f=F[i];
+  const r=(flt.classList.contains("on")?flt:rows[i]).getBoundingClientRect();
+  stage.style.backgroundImage=bg(f,i);
+  fi.innerHTML=`<h3>${f.t}</h3><div class="d"><p>${f.x}</p><span class="sans">${f.d}<br>${f.y}, ${f.m} min<br>${f.s}</span></div>`;
+  box(r,false);film.classList.add("on");flt.classList.remove("on");
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{box({left:0,top:0,width:innerWidth,height:innerHeight},true);film.classList.add("in");$("#x").focus({preventScroll:true})}));
+}
+function closeFilm(){
+  if(cur<0)return;
+  film.classList.remove("in");box(rows[cur].getBoundingClientRect(),true);
+  const c=cur;cur=-1;setTimeout(()=>{film.classList.remove("on");rows[c].focus({preventScroll:true})},900);
+}
+document.addEventListener("click",e=>{
+  const a=e.target.closest("a[data-i]");
+  if(a){e.preventDefault();openFilm(+a.dataset.i)}
+});
+$("#x").onclick=closeFilm;
+addEventListener("keydown",e=>{if(e.key==="Escape")closeFilm()});
+
+/* filmmakers point back into the index */
+let ft;
+$("#makers").addEventListener("click",e=>{
+  const b=e.target.closest("button[data-n]");if(!b)return;
+  const n=b.dataset.n;
+  idx.scrollIntoView({behavior:"smooth",block:"center"});
+  rows.forEach((r,i)=>r.classList.toggle("off",F[i].d!==n));
+  clearTimeout(ft);ft=setTimeout(()=>rows.forEach(r=>r.classList.remove("off")),4500);
+});
+
+/* ---------- Moment 3: photographs drift against the hand ---------- */
+const strip=$("#strip"),ims=$$(".im");let dragging=false,sx=0,sl=0,moved=0;
+strip.addEventListener("pointerdown",e=>{if(e.pointerType!=="mouse")return;dragging=true;sx=e.clientX;sl=strip.scrollLeft;moved=0;strip.classList.add("drag")});
+addEventListener("pointermove",e=>{if(!dragging)return;moved=e.clientX-sx;strip.scrollLeft=sl-moved});
+addEventListener("pointerup",()=>{dragging=false;strip.classList.remove("drag")});
+strip.addEventListener("dragstart",e=>e.preventDefault());
+function drift(){
+  const c=innerWidth/2;
+  ims.forEach(im=>{const r=im.parentElement.getBoundingClientRect();if(r.right<0||r.left>innerWidth)return;im.style.transform=`translate3d(${(r.left+r.width/2-c)*-.09}px,0,0)`});
+}
+strip.addEventListener("scroll",()=>requestAnimationFrame(drift),{passive:true});
+addEventListener("resize",drift);drift();
+
+/* ---------- Writing: one essay open at a time ---------- */
+$("#writing").addEventListener("click",e=>{
+  const b=e.target.closest(".es>button");if(!b)return;
+  const es=b.parentElement,open=!es.classList.contains("on");
+  $$(".es").forEach(x=>{x.classList.remove("on");$("button",x).setAttribute("aria-expanded","false")});
+  if(open){es.classList.add("on");b.setAttribute("aria-expanded","true")}
+});
+
+/* ---------- Navigation: a single brass point follows where you are ---------- */
+const links=$$("nav a"),dot=$("#dot");
+function place(a){dot.style.transform=`translateX(${a.offsetLeft+a.offsetWidth/2-2.5}px)`}
+function setActive(id){
+  links.forEach(l=>l.classList.toggle("on",l.dataset.s===id));
+  const a=links.find(l=>l.dataset.s===id);if(a){dot.style.opacity=1;place(a)}else dot.style.opacity=0;
+}
+dot.style.opacity=0;
+const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting)setActive(en.target.id)}),{rootMargin:"-50% 0px -50% 0px"});
+$$("main section").forEach(s=>io.observe(s));
+new IntersectionObserver(es=>es.forEach(en=>{setActive(en.isIntersecting?null:(links.find(l=>l.classList.contains("on"))||{dataset:{}}).dataset.s)}),{threshold:.6}).observe($(".hero"));
+new IntersectionObserver(es=>es.forEach(en=>$("#mark").classList.toggle("on",!en.isIntersecting)),{threshold:.15}).observe($("h1"));
+new IntersectionObserver(es=>es.forEach(en=>document.body.classList.toggle("paper",en.isIntersecting)),{rootMargin:"-40% 0px -40% 0px"}).observe($("#writing"));
+addEventListener("resize",()=>{const a=links.find(l=>l.classList.contains("on"));if(a)place(a)});
+</script>
+</body>
+</html>
