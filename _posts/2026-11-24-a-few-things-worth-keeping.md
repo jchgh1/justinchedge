@@ -2,7 +2,7 @@
 layout: post
 title: "A few things worth keeping"
 date: 2026-11-24 09:00:00 -0500
-format: Note
+format: Text
 description: "A sample post to preview the site."
 ---
 

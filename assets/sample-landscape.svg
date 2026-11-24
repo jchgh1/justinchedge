@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">A view from the window</title>
+  <desc id="desc">A minimal blue landscape with a rising sun.</desc>
+  <rect width="1200" height="720" fill="#f2f6ff"/>
+  <circle cx="850" cy="220" r="96" fill="#2864dc"/>
+  <path d="M0 510 300 290l255 215 220-180 425 310v85H0Z" fill="#b8cafa"/>
+  <path d="m0 590 320-155 245 120 280-195 355 250v110H0Z" fill="#2864dc"/>
+  <path d="M0 652q230-58 460 0t460 0 280 8v60H0Z" fill="#1749ae" opacity=".78"/>
+</svg>

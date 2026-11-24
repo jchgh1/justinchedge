@@ -1,22 +1,4 @@
 (() => {
-  const root = document.documentElement;
-  const themeButton = document.getElementById('theme-toggle');
-  const setTheme = theme => {
-    root.setAttribute('data-theme', theme);
-    try { localStorage.setItem('theme', theme); } catch (_) {}
-    if (themeButton) {
-      themeButton.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
-      themeButton.setAttribute('title', theme === 'dark' ? 'Light mode' : 'Dark mode');
-    }
-  };
-
-  if (themeButton) {
-    setTheme(root.getAttribute('data-theme') || 'light');
-    themeButton.addEventListener('click', () => {
-      setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-    });
-  }
-
   const filterButton = document.getElementById('filter-toggle');
   const filters = document.getElementById('filters');
   if (filterButton && filters) {

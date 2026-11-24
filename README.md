@@ -1,4 +1,4 @@
-# Justin Chedge — personal blog
+# Justin Hedge — personal blog
 
 A small Jekyll site for GitHub Pages. Posts are Markdown files in `_posts`; the homepage builds its searchable feed from post front matter. Template source files are kept under `_includes/templates` and are not published as a website page.
 
