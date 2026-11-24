@@ -1,6 +1,6 @@
 # Justin Chedge — personal blog
 
-A small Jekyll site for GitHub Pages. Posts are Markdown files in `_posts`; the homepage builds its searchable feed from post front matter. `/templates/` provides copyable Markdown starters and stays out of the feed.
+A small Jekyll site for GitHub Pages. Posts are Markdown files in `_posts`; the homepage builds its searchable feed from post front matter. Template source files are kept under `_includes/templates` and are not published as a website page.
 
 ## Add the profile image
 
@@ -17,4 +17,4 @@ GitHub Pages supplies the Jekyll build and the `github-pages` gem dependencies t
 
 ## Post formats
 
-Set `format` in the YAML front matter to `Text`, `Image`, `Article`, `Blog`, or `YouTube`. This controls the homepage filter and the label on the post. Copy a starter from `/templates/` and update its title, date, format, and body.
+Set `format` in the YAML front matter to `Text`, `Image`, `Article`, `Blog`, or `YouTube`. This controls the homepage filter and the label on the post. The sample Markdown starters are in `_includes/templates`; update the title, date, format, and body when using one.
