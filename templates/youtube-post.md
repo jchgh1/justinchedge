@@ -1,6 +1,7 @@
 ---
 layout: post
 title: ""
+format: note
 ---
 
 Add a short note about the video here, if you like.

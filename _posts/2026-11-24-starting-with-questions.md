@@ -1,5 +1,6 @@
 ---
 layout: post
+format: blog
 title: Starting with questions
 description: A small note on why I want a place to work through ideas in writing.
 ---

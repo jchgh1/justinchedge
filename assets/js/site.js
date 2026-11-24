@@ -1,0 +1,78 @@
+(() => {
+  const items = Array.from(document.querySelectorAll("[data-feed-item]"));
+  if (!items.length) return;
+
+  const titleInput = document.querySelector("[data-filter-title]");
+  const yearSelect = document.querySelector("[data-filter-year]");
+  const monthSelect = document.querySelector("[data-filter-month]");
+  const formatSelect = document.querySelector("[data-filter-format]");
+  const resetButton = document.querySelector("[data-filter-reset]");
+  const status = document.querySelector("[data-feed-status]");
+  const noResults = document.querySelector("[data-no-results]");
+  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+  const appendOption = (select, value, label) => {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = label;
+    select.append(option);
+  };
+
+  const years = [...new Set(items.map((item) => item.dataset.year))].sort((a, b) => b.localeCompare(a));
+  years.forEach((year) => appendOption(yearSelect, year, year));
+
+  const updateMonths = () => {
+    const previousMonth = monthSelect.value;
+    const selectedYear = yearSelect.value;
+    const availableMonths = new Set(
+      items
+        .filter((item) => !selectedYear || item.dataset.year === selectedYear)
+        .map((item) => item.dataset.month)
+    );
+
+    monthSelect.replaceChildren(new Option("Any month", ""));
+    monthNames.forEach((month, index) => {
+      const value = String(index + 1).padStart(2, "0");
+      if (availableMonths.has(value)) appendOption(monthSelect, value, month);
+    });
+    if (availableMonths.has(previousMonth)) monthSelect.value = previousMonth;
+  };
+
+  const updateFeed = () => {
+    const query = titleInput.value.trim().toLocaleLowerCase();
+    const year = yearSelect.value;
+    const month = monthSelect.value;
+    const format = formatSelect.value;
+    let visible = 0;
+
+    items.forEach((item) => {
+      const matches = (!query || item.dataset.title.toLocaleLowerCase().includes(query))
+        && (!year || item.dataset.year === year)
+        && (!month || item.dataset.month === month)
+        && (!format || item.dataset.format === format);
+      item.hidden = !matches;
+      if (matches) visible += 1;
+    });
+
+    status.textContent = `${visible} ${visible === 1 ? "post" : "posts"}`;
+    noResults.hidden = visible !== 0;
+  };
+
+  titleInput.addEventListener("input", updateFeed);
+  yearSelect.addEventListener("change", () => {
+    updateMonths();
+    updateFeed();
+  });
+  monthSelect.addEventListener("change", updateFeed);
+  formatSelect.addEventListener("change", updateFeed);
+  resetButton.addEventListener("click", () => {
+    titleInput.value = "";
+    yearSelect.value = "";
+    formatSelect.value = "";
+    updateMonths();
+    updateFeed();
+  });
+
+  updateMonths();
+  updateFeed();
+})();

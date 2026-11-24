@@ -1,6 +1,7 @@
 ---
 layout: post
 title: ""
+format: note
 image: /assets/images/your-image.jpg
 image_alt: Describe the image for readers using a screen reader.
 ---

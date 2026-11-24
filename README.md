@@ -46,6 +46,8 @@ Commit the file to `main`. It will appear on the home page after GitHub Pages fi
 The `templates/` folder is excluded from the published site. Copy one of its files into `_posts/`, rename it to start with the date (`YYYY-MM-DD-short-title.md`), and edit the text:
 
 - `templates/text-post.md` for a paragraph or short note
+- `templates/blog-post.md` for a longer blog post
+- `templates/article.md` for an article
 - `templates/image-post.md` for a post with an image
 - `templates/youtube-post.md` for a post with a YouTube embed
 
@@ -57,4 +59,4 @@ Put images in `assets/images/` and set `image` to a path such as `/assets/images
 - Change colors and typography in `assets/css/style.css`.
 - The sample post is in `_posts`; edit it or remove it whenever you like.
 
-The homepage shows a chronological feed of post previews. The site includes an RSS feed at `/feed.xml` for readers who use feed apps.
+The homepage is the full chronological feed. Its filters search post titles and narrow by year, month, and format. Add `format: article`, `format: blog`, or `format: note` to a post's front matter; posts without a format are treated as blog posts. The site includes an RSS feed at `/feed.xml` for readers who use feed apps.

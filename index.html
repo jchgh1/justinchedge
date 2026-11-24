@@ -3,16 +3,38 @@ layout: default
 title: Home
 ---
 
-<section class="feed" aria-label="Posts">
-  <p class="feed-intro">{{ site.description }}</p>
+<section class="feed" aria-label="Writing feed">
+  <div class="feed-controls" aria-label="Filter posts">
+    <label class="filter-search">Search titles
+      <input type="search" placeholder="Search by title" autocomplete="off" data-filter-title>
+    </label>
+    <label>Year
+      <select data-filter-year><option value="">Any year</option></select>
+    </label>
+    <label>Month
+      <select data-filter-month><option value="">Any month</option></select>
+    </label>
+    <label>Format
+      <select data-filter-format>
+        <option value="">All writing</option>
+        <option value="article">Articles</option>
+        <option value="blog">Blog posts</option>
+        <option value="note">Notes</option>
+      </select>
+    </label>
+    <button class="filter-reset" type="button" data-filter-reset>Clear</button>
+  </div>
+
+  <p class="feed-status" aria-live="polite" data-feed-status></p>
+  <div class="feed-items">
   {% for post in site.posts %}
     {% assign post_text = post.content | strip_html | strip %}
     {% assign post_excerpt = post.excerpt | strip_html | strip %}
-    <article class="feed-item">
+    {% assign post_title = post.title | strip %}
+    <article class="feed-item" data-feed-item data-year="{{ post.date | date: '%Y' }}" data-month="{{ post.date | date: '%m' }}" data-format="{{ post.format | default: 'blog' | downcase | escape }}" data-title="{{ post.title | escape }}">
       <header class="feed-meta">
         <time datetime="{{ post.date | date_to_xmlschema }}"><a href="{{ post.url | relative_url }}">{{ post.date | date: "%b %-d, %Y" }}</a></time>
       </header>
-      {% assign post_title = post.title | strip %}
       {% if post_title != empty %}<h2 class="feed-title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>{% endif %}
       <div class="feed-copy">{{ post.excerpt }}</div>
       {% if post.image %}
@@ -25,4 +47,6 @@ title: Home
   {% else %}
     <p class="empty-feed">No posts yet.</p>
   {% endfor %}
+  </div>
+  <p class="empty-feed" data-no-results hidden>No posts match those filters.</p>
 </section>
