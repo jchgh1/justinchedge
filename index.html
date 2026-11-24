@@ -14,13 +14,13 @@ title: Home
       {% for post in sorted_posts %}
         {% assign format = post.format | default: 'Text' | downcase %}
         <article class="post-card post-card--{{ format | escape }}" data-title="{{ post.title | downcase | escape }}" data-year="{{ post.date | date: '%Y' }}" data-month="{{ post.date | date: '%m' }}" data-format="{{ format | escape }}">
+          <div class="post-card-byline"><span class="feed-avatar"><img src="{{ '/assets/IMG_4732.jpg' | relative_url }}" alt="" width="36" height="36" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span hidden>J</span></span><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d" }}</time></div>
           {% if format == 'youtube' and post.youtube_id %}
             <div class="feed-video"><iframe src="https://www.youtube-nocookie.com/embed/{{ post.youtube_id | escape }}" title="{{ post.title | escape }}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
           {% elsif post.image %}
             <a class="post-media" href="{{ post.url | relative_url }}"><img src="{{ post.image | relative_url }}" alt="{{ post.image_alt | default: post.title | escape }}" loading="lazy"></a>
           {% endif %}
           <div class="post-card-body">
-            <div class="post-date"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time></div>
             <a class="post-main" href="{{ post.url | relative_url }}"><span class="post-title">{{ post.title }}</span></a>
             {% if format == 'text' or format == 'blog' %}
               <div class="post-excerpt">{{ post.excerpt | markdownify }}</div>
