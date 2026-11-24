@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#ffffff">
   {% seo %}
-  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v=20261124-6">
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v=20261124-8">
   <script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'light')}catch(e){document.documentElement.setAttribute('data-theme','light')}</script>
 </head>
 <body>
@@ -19,7 +19,42 @@
     </div>
   </header>
   {{ content }}
-  <script>(()=>{const root=document.documentElement,button=document.getElementById('theme-toggle');const apply=theme=>{root.setAttribute('data-theme',theme);const dark=theme==='dark';root.style.setProperty('--bg',dark?'#000':'#fff');root.style.setProperty('--surface',dark?'#111':'#f7f8fa');root.style.setProperty('--text',dark?'#f3f4f6':'#17191d');root.style.setProperty('--muted',dark?'#969ba4':'#777d87');root.style.setProperty('--accent',dark?'#80aaff':'#2864dc');root.style.setProperty('--accent-soft',dark?'#151f35':'#edf3ff');button.setAttribute('aria-label',dark?'Switch to light mode':'Switch to dark mode');try{localStorage.setItem('theme',theme)}catch(e){}};apply(root.getAttribute('data-theme')||'light');button.addEventListener('click',()=>apply(root.getAttribute('data-theme')==='dark'?'light':'dark'));const filterButton=document.getElementById('filter-toggle'),filters=document.getElementById('filters');if(filterButton&&filters)filterButton.addEventListener('click',()=>{const open=filterButton.getAttribute('aria-expanded')!=='true';filterButton.setAttribute('aria-expanded',String(open));filterButton.setAttribute('aria-label',open?'Hide filters':'Show filters');filters.hidden=!open})})();</script>
-  <script src="{{ '/assets/js/site.js' | relative_url }}?v=20261124-6" defer></script>
+  <div class="media-lightbox" id="media-lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" hidden>
+    <button class="lightbox-close" id="lightbox-close" type="button" aria-label="Close image">×</button>
+    <img id="lightbox-image" alt="">
+  </div>
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const themeButton = document.getElementById('theme-toggle');
+      const applyTheme = theme => {
+        const dark = theme === 'dark';
+        root.setAttribute('data-theme', theme);
+        root.style.setProperty('--bg', dark ? '#000' : '#fff');
+        root.style.setProperty('--surface', dark ? '#111' : '#f7f8fa');
+        root.style.setProperty('--text', dark ? '#f3f4f6' : '#17191d');
+        root.style.setProperty('--muted', dark ? '#969ba4' : '#777d87');
+        root.style.setProperty('--accent', dark ? '#80aaff' : '#2864dc');
+        root.style.setProperty('--accent-soft', dark ? '#151f35' : '#edf3ff');
+        themeButton.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+        try { localStorage.setItem('theme', theme); } catch (error) {}
+      };
+      applyTheme(root.getAttribute('data-theme') || 'light');
+      themeButton.addEventListener('click', () => applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+
+      const filterButton = document.getElementById('filter-toggle');
+      const filters = document.getElementById('filters');
+      if (filterButton && filters) filterButton.addEventListener('click', () => {
+        const open = filterButton.getAttribute('aria-expanded') !== 'true';
+        filterButton.setAttribute('aria-expanded', String(open));
+        filterButton.setAttribute('aria-label', open ? 'Hide filters' : 'Show filters');
+        filters.hidden = !open;
+        if (open && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          filters.animate([{ opacity: 0, transform: 'translateY(-6px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 180, easing: 'ease-out' });
+        }
+      });
+    })();
+  </script>
+  <script src="{{ '/assets/js/site.js' | relative_url }}?v=20261124-8" defer></script>
 </body>
 </html>
