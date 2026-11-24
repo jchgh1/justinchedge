@@ -1,14 +1,17 @@
-# Your GitHub Pages blog
+# Justin Hedge
 
-A small, text-first blog built with Jekyll and GitHub Pages. Posts are plain Markdown files. There is no database or server to maintain.
+A minimal, text-first blog built with Jekyll and GitHub Pages. Posts are plain Markdown files. There is no database or server to maintain.
+
+Repository: [jchgh1/justinchedge](https://github.com/jchgh1/justinchedge)  
+Site: [justinchedge.com](https://justinchedge.com)
 
 ## Publish it on GitHub Pages
 
-1. Create a GitHub repository. For a personal site, name it `YOUR-USERNAME.github.io`. A regular repository name works too.
-2. Put these files in the repository and push them to the `main` branch.
-3. In the repository, open **Settings → Pages**. Under **Build and deployment**, choose **Deploy from a branch**, select `main` and `/(root)`, then save.
-4. For a regular repository, edit `_config.yml`: set `baseurl` to `"/YOUR-REPOSITORY"` (include the leading slash). For a personal `YOUR-USERNAME.github.io` repository, leave `baseurl` empty.
-5. Wait for the Pages build to finish. The Pages settings page shows the published address.
+1. In [the repository](https://github.com/jchgh1/justinchedge), open **Settings → Pages**.
+2. Under **Build and deployment**, choose **Deploy from a branch**, select `main` and `/(root)`, then save.
+3. Under **Custom domain**, enter `justinchedge.com` if it is not already shown. The included `CNAME` file also declares this domain.
+4. Confirm that the domain's DNS points to GitHub Pages, and enable **Enforce HTTPS** when the option becomes available.
+5. Wait for the Pages build to finish. The Pages settings page shows the published address and build status.
 
 GitHub Pages builds the site when you push changes. The included `github-pages` dependency is for previewing locally; you do not need a server or a paid service to publish.
 
@@ -41,7 +44,6 @@ Commit the file to `main`. It will appear on the home page after GitHub Pages fi
 ## Make it yours
 
 - Change `title` and `description` in `_config.yml`.
-- Rewrite `about.md` in your own voice.
 - Change colors and typography in `assets/css/style.css`.
 - The sample post is in `_posts`; edit it or remove it whenever you like.
 

@@ -1,6 +1,6 @@
-title: Notes
-description: Ideas, questions, and things I am figuring out.
-url: ""
+title: Justin Hedge
+description: Notes and ideas.
+url: "https://justinchedge.com"
 baseurl: ""
 markdown: kramdown
 permalink: /:year/:month/:day/:title/
