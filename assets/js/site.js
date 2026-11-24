@@ -10,7 +10,7 @@
     });
   }
 
-  const rows = [...document.querySelectorAll('.post-row')];
+  const rows = [...document.querySelectorAll('.post-card')];
   const search = document.getElementById('post-search');
   const year = document.getElementById('filter-year');
   const month = document.getElementById('filter-month');

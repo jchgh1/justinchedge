@@ -3,6 +3,7 @@ layout: post
 title: "A video to save"
 date: 2026-11-24 13:00:00 -0500
 format: YouTube
+youtube_id: aqz-KE-bpKQ
 description: "A YouTube video with a short note."
 ---
 
