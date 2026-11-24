@@ -56,6 +56,7 @@ Put images in `assets/images/` and set `image` to a path such as `/assets/images
 ## Make it yours
 
 - Change `title` and `description` in `_config.yml`.
+- The shared author avatar appears automatically beside every post. Set `author_avatar` in `_config.yml` to the image path you want to use.
 - Change colors and typography in `assets/css/style.css`.
 - The sample post is in `_posts`; edit it or remove it whenever you like.
 

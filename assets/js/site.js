@@ -1,4 +1,27 @@
 (() => {
+  const themeButton = document.querySelector("[data-theme-toggle]");
+  const themeIcon = document.querySelector("[data-theme-icon]");
+  const root = document.documentElement;
+  const currentTheme = () => root.dataset.theme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+
+  const syncThemeControl = () => {
+    const dark = currentTheme() === "dark";
+    const label = dark ? "Switch to light mode" : "Switch to dark mode";
+    themeButton.setAttribute("aria-label", label);
+    themeButton.title = label;
+    themeIcon.textContent = dark ? "☀" : "☾";
+  };
+
+  if (themeButton && themeIcon) {
+    themeButton.addEventListener("click", () => {
+      const nextTheme = currentTheme() === "dark" ? "light" : "dark";
+      root.dataset.theme = nextTheme;
+      try { localStorage.setItem("site-theme", nextTheme); } catch (_) {}
+      syncThemeControl();
+    });
+    syncThemeControl();
+  }
+
   const items = Array.from(document.querySelectorAll("[data-feed-item]"));
   if (!items.length) return;
 

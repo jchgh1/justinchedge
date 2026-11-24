@@ -33,7 +33,9 @@ title: Home
     {% assign post_title = post.title | strip %}
     <article class="feed-item" data-feed-item data-year="{{ post.date | date: '%Y' }}" data-month="{{ post.date | date: '%m' }}" data-format="{{ post.format | default: 'blog' | downcase | escape }}" data-title="{{ post.title | escape }}">
       <header class="feed-meta">
+      <img class="author-avatar" src="{{ site.author_avatar | absolute_url }}" alt="" width="34" height="34">
       <time datetime="{{ post.date | date_to_xmlschema }}"><a href="{{ post.url | absolute_url }}">{{ post.date | date: "%b %-d, %Y" }}</a></time>
+      <span class="feed-format">{{ post.format | default: 'blog' }}</span>
       </header>
       {% if post_title != empty %}<h2 class="feed-title"><a href="{{ post.url | absolute_url }}">{{ post.title }}</a></h2>{% endif %}
       <div class="feed-copy">{{ post.excerpt }}</div>

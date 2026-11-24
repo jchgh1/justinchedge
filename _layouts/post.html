@@ -4,7 +4,10 @@ layout: default
 <article class="article">
   <header class="article-header">
     <a class="back-link" href="{{ '/' | absolute_url }}">← Back to feed</a>
-    <p class="post-date"><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time></p>
+    <div class="post-byline">
+      <img class="author-avatar" src="{{ site.author_avatar | absolute_url }}" alt="" width="38" height="38">
+      <div><p class="post-date"><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time></p><span class="feed-format">{{ page.format | default: 'blog' }}</span></div>
+    </div>
     {% if page.title %}<h1>{{ page.title }}</h1>{% endif %}
     {% if page.description %}<p class="article-deck">{{ page.description }}</p>{% endif %}
   </header>
