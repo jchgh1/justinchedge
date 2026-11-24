@@ -1,4 +1,27 @@
 (() => {
+  const siteHeader = document.querySelector('.site-header');
+  let previousScrollY = window.scrollY;
+  let scrollTicking = false;
+  const updateHeaderVisibility = () => {
+    const currentScrollY = window.scrollY;
+    const scrollingUp = currentScrollY < previousScrollY - 4;
+    const scrollingDown = currentScrollY > previousScrollY + 4;
+    const headerHasFocus = siteHeader?.contains(document.activeElement);
+    if (siteHeader) {
+      if (currentScrollY < 48 || scrollingUp || headerHasFocus) siteHeader.classList.remove('is-hidden');
+      else if (scrollingDown && currentScrollY > 100) siteHeader.classList.add('is-hidden');
+    }
+    previousScrollY = currentScrollY;
+    scrollTicking = false;
+  };
+  window.addEventListener('scroll', () => {
+    if (!scrollTicking) {
+      window.requestAnimationFrame(updateHeaderVisibility);
+      scrollTicking = true;
+    }
+  }, { passive: true });
+  siteHeader?.addEventListener('focusin', () => siteHeader.classList.remove('is-hidden'));
+
   document.querySelectorAll('.share-button').forEach(button => {
     button.addEventListener('click', async () => {
       const { shareUrl, shareTitle, shareText } = button.dataset;
