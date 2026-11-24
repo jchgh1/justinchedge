@@ -1,97 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Justin Hedge</title>
-<style>
-  :root {
-    --cream: #F2EDE3;
-    --ink: #2B2823;
-    --ink-soft: #6B6559;
-    --line: #DCD5C4;
-    --accent: #8A7551;
-  }
+---
+layout: default
+title: Home
+---
 
-  * {
-    box-sizing: border-box;
-  }
+<section class="intro">
+  <p class="eyebrow">A place to think in public</p>
+  <h1>{{ site.title }}</h1>
+  <p class="intro-copy">{{ site.description }}</p>
+</section>
 
-  html, body {
-    margin: 0;
-    padding: 0;
-    background: var(--cream);
-    color: var(--ink);
-    font-family: Georgia, 'Iowan Old Style', 'Palatino Linotype', serif;
-  }
+<section class="post-list" aria-labelledby="recent-heading">
+  <div class="section-heading">
+    <h2 id="recent-heading">Recent writing</h2>
+    <span>{{ site.posts.size }} {% if site.posts.size == 1 %}post{% else %}posts{% endif %}</span>
+  </div>
 
-  body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 48px 24px;
-  }
-
-  .container {
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-  }
-
-  h1 {
-    font-size: 26px;
-    font-weight: 400;
-    letter-spacing: 0.2px;
-    margin: 0 0 8px;
-  }
-
-  p {
-    font-size: 15px;
-    color: var(--ink-soft);
-    margin: 0 0 40px;
-  }
-
-  .nav-list {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .nav-btn {
-    display: block;
-    width: 100%;
-    padding: 14px 20px;
-    border: 1px solid var(--ink);
-    border-radius: 4px;
-    background: transparent;
-    color: var(--ink);
-    font-family: Georgia, serif;
-    font-size: 16px;
-    text-decoration: none;
-    transition: background 0.15s ease, color 0.15s ease;
-  }
-
-  .nav-btn:hover {
-    background: var(--ink);
-    color: var(--cream);
-  }
-</style>
-</head>
-
-<body>
-
-<div class="container">
-  <p>justinchedge@justinchedge.com</p>
-
-  <nav class="nav-list">
-    <a href="food.html" class="nav-btn">food</a>
-    <a href="jazz-fall.html" class="nav-btn">Jazz Fall</a>
-    <a href="https://jchgh1.github.io/jazzclubfilms" class="nav-btn">production site</a>
-    <a href="https://jchgh1.github.io/justinhedge" class="nav-btn">personal film site</a>
-  </nav>
-</div>
-
-</body>
-</html>
+  {% for post in site.posts %}
+    <article class="post-card">
+      <p class="post-date"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %-d, %Y" }}</time></p>
+      <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+      {% if post.description %}
+        <p class="post-summary">{{ post.description }}</p>
+      {% else %}
+        <p class="post-summary">{{ post.excerpt | strip_html | truncate: 180 }}</p>
+      {% endif %}
+      <a class="read-link" href="{{ post.url | relative_url }}">Read the post <span aria-hidden="true">→</span></a>
+    </article>
+  {% else %}
+    <div class="empty-state">
+      <p>Your first post is one Markdown file away.</p>
+      <p>Make a file in <code>_posts</code> named <code>YYYY-MM-DD-title.md</code> and start writing.</p>
+    </div>
+  {% endfor %}
+</section>

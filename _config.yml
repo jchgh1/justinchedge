@@ -1,0 +1,14 @@
+title: Notes
+description: Ideas, questions, and things I am figuring out.
+url: ""
+baseurl: ""
+markdown: kramdown
+permalink: /:year/:month/:day/:title/
+timezone: America/New_York
+plugins:
+  - jekyll-feed
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
