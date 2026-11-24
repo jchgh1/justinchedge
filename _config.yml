@@ -1,6 +1,5 @@
-title: Justin Hedge
-description: Notes and ideas.
-author_avatar: /IMG_4732.jpg
+title: Justin Chedge
+description: Notes, essays, and things worth keeping.
 url: "https://justinchedge.com"
 baseurl: ""
 markdown: kramdown
@@ -8,9 +7,11 @@ permalink: /:year/:month/:day/:title/
 timezone: America/New_York
 plugins:
   - jekyll-feed
-
-exclude:
-  - README.md
-  - templates
-  - Gemfile
-  - Gemfile.lock
+  - jekyll-seo-tag
+exclude: [README.md, Gemfile, Gemfile.lock, vendor]
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
