@@ -3,12 +3,12 @@ layout: default
 ---
 <article class="article">
   <header class="article-header">
-    <a class="back-link" href="{{ '/' | relative_url }}">← Back to feed</a>
+    <a class="back-link" href="{{ '/' | absolute_url }}">← Back to feed</a>
     <p class="post-date"><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time></p>
     {% if page.title %}<h1>{{ page.title }}</h1>{% endif %}
     {% if page.description %}<p class="article-deck">{{ page.description }}</p>{% endif %}
   </header>
-  {% if page.image %}<img class="article-image" src="{{ page.image | relative_url }}" alt="{{ page.image_alt | default: '' | escape }}">{% endif %}
+  {% if page.image %}<img class="article-image" src="{{ page.image | absolute_url }}" alt="{{ page.image_alt | default: '' | escape }}">{% endif %}
   <div class="article-content">{{ content }}</div>
-  <footer class="article-end"><a href="{{ '/' | relative_url }}">Back to feed</a></footer>
+  <footer class="article-end"><a href="{{ '/' | absolute_url }}">Back to feed</a></footer>
 </article>
