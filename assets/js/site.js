@@ -22,6 +22,28 @@
     syncThemeControl();
   }
 
+  const filterToggle = document.querySelector("[data-filter-toggle]");
+  const filterPanel = document.querySelector("[data-filter-panel]");
+  if (filterToggle && filterPanel) {
+    filterToggle.addEventListener("click", () => {
+      const open = filterToggle.getAttribute("aria-expanded") !== "true";
+      filterToggle.setAttribute("aria-expanded", String(open));
+      filterToggle.setAttribute("aria-label", open ? "Hide filters" : "Show filters");
+      filterToggle.title = open ? "Hide filters" : "Show filters";
+      filterPanel.classList.toggle("is-open", open);
+      filterPanel.inert = !open;
+    });
+  }
+
+  const avatarFallbacks = ["/IMG_4732.jpg", "/assets/images/IMG_4732.jpg", "/assets/images/justin-avatar.svg"];
+  document.querySelectorAll("[data-author-avatar]").forEach((avatar) => {
+    let fallbackIndex = 0;
+    avatar.addEventListener("error", () => {
+      fallbackIndex += 1;
+      if (fallbackIndex < avatarFallbacks.length) avatar.src = new URL(avatarFallbacks[fallbackIndex], window.location.origin).href;
+    });
+  });
+
   const items = Array.from(document.querySelectorAll("[data-feed-item]"));
   if (!items.length) return;
 
