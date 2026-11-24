@@ -41,10 +41,20 @@ Use **bold**, *italics*, links, and lists as needed.
 
 Commit the file to `main`. It will appear on the home page after GitHub Pages finishes building. To edit a post, edit its `.md` file in GitHub and commit the change.
 
+## Copy a post template
+
+The `templates/` folder is excluded from the published site. Copy one of its files into `_posts/`, rename it to start with the date (`YYYY-MM-DD-short-title.md`), and edit the text:
+
+- `templates/text-post.md` for a paragraph or short note
+- `templates/image-post.md` for a post with an image
+- `templates/youtube-post.md` for a post with a YouTube embed
+
+Put images in `assets/images/` and set `image` to a path such as `/assets/images/photo.jpg`. For YouTube embeds, replace `VIDEO_ID` in the iframe with the ID from the video URL.
+
 ## Make it yours
 
 - Change `title` and `description` in `_config.yml`.
 - Change colors and typography in `assets/css/style.css`.
 - The sample post is in `_posts`; edit it or remove it whenever you like.
 
-The site includes an RSS feed at `/feed.xml` for readers who use feed apps.
+The homepage shows a chronological feed of post previews. The site includes an RSS feed at `/feed.xml` for readers who use feed apps.

@@ -3,18 +3,24 @@ layout: default
 title: Home
 ---
 
-<section class="home">
-  <h1>{{ site.title }}</h1>
-  <p class="home-description">{{ site.description }}</p>
-
-  {% assign latest = site.posts.first %}
-  {% if latest %}
-    <section class="latest" aria-labelledby="latest-heading">
-      <h2 id="latest-heading">Latest</h2>
-      <p class="post-date"><time datetime="{{ latest.date | date_to_xmlschema }}">{{ latest.date | date: "%B %-d, %Y" }}</time></p>
-      <h3><a href="{{ latest.url | relative_url }}">{{ latest.title }}</a></h3>
-      {% if latest.description %}<p class="post-summary">{{ latest.description }}</p>{% endif %}
-      <a class="read-link" href="{{ latest.url | relative_url }}">Read →</a>
-    </section>
-  {% endif %}
+<section class="feed" aria-label="Posts">
+  {% for post in site.posts %}
+    {% assign post_text = post.content | strip_html | strip %}
+    {% assign post_excerpt = post.excerpt | strip_html | strip %}
+    <article class="feed-item">
+      <header class="feed-meta">
+        <time datetime="{{ post.date | date_to_xmlschema }}"><a href="{{ post.url | relative_url }}">{{ post.date | date: "%b %-d, %Y" }}</a></time>
+        {% if post.title %}<span>{{ post.title }}</span>{% endif %}
+      </header>
+      <div class="feed-copy">{{ post.excerpt }}</div>
+      {% if post.image %}
+        <a class="feed-image-link" href="{{ post.url | relative_url }}"><img class="feed-image" src="{{ post.image | relative_url }}" alt="{{ post.image_alt | default: '' | escape }}" loading="lazy"></a>
+      {% endif %}
+      {% if post_text.size > post_excerpt.size %}
+        <a class="read-link" href="{{ post.url | relative_url }}">Read more →</a>
+      {% endif %}
+    </article>
+  {% else %}
+    <p class="empty-feed">No posts yet.</p>
+  {% endfor %}
 </section>

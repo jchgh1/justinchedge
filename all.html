@@ -9,9 +9,10 @@ permalink: /all/
   {% if site.posts.size > 0 %}
     <ul class="post-list">
       {% for post in site.posts %}
+        {% assign post_title = post.title | strip %}
         <li>
           <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
-          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          <a href="{{ post.url | relative_url }}">{% if post_title != empty %}{{ post.title }}{% else %}{{ post.excerpt | strip_html | truncate: 75 }}{% endif %}</a>
         </li>
       {% endfor %}
     </ul>
