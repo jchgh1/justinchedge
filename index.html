@@ -4,14 +4,16 @@ title: Home
 ---
 
 <section class="feed" aria-label="Posts">
+  <p class="feed-intro">{{ site.description }}</p>
   {% for post in site.posts %}
     {% assign post_text = post.content | strip_html | strip %}
     {% assign post_excerpt = post.excerpt | strip_html | strip %}
     <article class="feed-item">
       <header class="feed-meta">
         <time datetime="{{ post.date | date_to_xmlschema }}"><a href="{{ post.url | relative_url }}">{{ post.date | date: "%b %-d, %Y" }}</a></time>
-        {% if post.title %}<span>{{ post.title }}</span>{% endif %}
       </header>
+      {% assign post_title = post.title | strip %}
+      {% if post_title != empty %}<h2 class="feed-title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>{% endif %}
       <div class="feed-copy">{{ post.excerpt }}</div>
       {% if post.image %}
         <a class="feed-image-link" href="{{ post.url | relative_url }}"><img class="feed-image" src="{{ post.image | relative_url }}" alt="{{ post.image_alt | default: '' | escape }}" loading="lazy"></a>
