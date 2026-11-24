@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#ffffff">
   {% seo %}
-  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v=20261124-4">
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v=20261124-6">
   <script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'light')}catch(e){document.documentElement.setAttribute('data-theme','light')}</script>
 </head>
 <body>
@@ -19,7 +19,7 @@
     </div>
   </header>
   {{ content }}
-  <script>(()=>{const root=document.documentElement,button=document.getElementById('theme-toggle');const apply=theme=>{root.setAttribute('data-theme',theme);const dark=theme==='dark';root.style.setProperty('--bg',dark?'#000':'#fff');root.style.setProperty('--surface',dark?'#111':'#f7f8fa');root.style.setProperty('--text',dark?'#f3f4f6':'#17191d');root.style.setProperty('--muted',dark?'#969ba4':'#777d87');root.style.setProperty('--line',dark?'#26282d':'#e9ebef');root.style.setProperty('--accent',dark?'#80aaff':'#2864dc');root.style.setProperty('--accent-soft',dark?'#151f35':'#edf3ff');button.setAttribute('aria-label',dark?'Switch to light mode':'Switch to dark mode');try{localStorage.setItem('theme',theme)}catch(e){}};apply(root.getAttribute('data-theme')||'light');button.addEventListener('click',()=>apply(root.getAttribute('data-theme')==='dark'?'light':'dark'))})();</script>
-  <script src="{{ '/assets/js/site.js' | relative_url }}?v=20261124-4" defer></script>
+  <script>(()=>{const root=document.documentElement,button=document.getElementById('theme-toggle');const apply=theme=>{root.setAttribute('data-theme',theme);const dark=theme==='dark';root.style.setProperty('--bg',dark?'#000':'#fff');root.style.setProperty('--surface',dark?'#111':'#f7f8fa');root.style.setProperty('--text',dark?'#f3f4f6':'#17191d');root.style.setProperty('--muted',dark?'#969ba4':'#777d87');root.style.setProperty('--accent',dark?'#80aaff':'#2864dc');root.style.setProperty('--accent-soft',dark?'#151f35':'#edf3ff');button.setAttribute('aria-label',dark?'Switch to light mode':'Switch to dark mode');try{localStorage.setItem('theme',theme)}catch(e){}};apply(root.getAttribute('data-theme')||'light');button.addEventListener('click',()=>apply(root.getAttribute('data-theme')==='dark'?'light':'dark'));const filterButton=document.getElementById('filter-toggle'),filters=document.getElementById('filters');if(filterButton&&filters)filterButton.addEventListener('click',()=>{const open=filterButton.getAttribute('aria-expanded')!=='true';filterButton.setAttribute('aria-expanded',String(open));filterButton.setAttribute('aria-label',open?'Hide filters':'Show filters');filters.hidden=!open})})();</script>
+  <script src="{{ '/assets/js/site.js' | relative_url }}?v=20261124-6" defer></script>
 </body>
 </html>

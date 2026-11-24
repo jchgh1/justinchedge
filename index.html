@@ -14,20 +14,17 @@ title: Home
       {% for post in sorted_posts %}
         {% assign format = post.format | default: 'Text' | downcase %}
         <article class="post-card post-card--{{ format | escape }}" data-title="{{ post.title | downcase | escape }}" data-year="{{ post.date | date: '%Y' }}" data-month="{{ post.date | date: '%m' }}" data-format="{{ format | escape }}">
-          <div class="post-card-byline"><span class="feed-avatar"><img src="{{ '/assets/IMG_4732.jpg' | relative_url }}" alt="" width="36" height="36" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span hidden>J</span></span><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d" }}</time></div>
-          {% if format == 'youtube' and post.youtube_id %}
-            <div class="feed-video"><iframe src="https://www.youtube-nocookie.com/embed/{{ post.youtube_id | escape }}" title="{{ post.title | escape }}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
-          {% elsif post.image %}
-            <a class="post-media" href="{{ post.url | relative_url }}"><img src="{{ post.image | relative_url }}" alt="{{ post.image_alt | default: post.title | escape }}" loading="lazy"></a>
-          {% endif %}
+          <div class="post-card-byline"><span class="feed-avatar"><img src="{{ '/assets/IMG_4732.jpg' | relative_url }}" alt="" width="36" height="36" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span hidden>J</span></span><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d" }}</time><button class="share-button" type="button" data-share-url="{{ post.url | absolute_url }}" data-share-title="{{ post.title | escape }}" data-share-text="{{ post.description | default: post.title | escape }}" aria-label="Share post: {{ post.title | escape }}" title="Share post"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="2.5"></circle><circle cx="6" cy="12" r="2.5"></circle><circle cx="18" cy="19" r="2.5"></circle><path d="m8.2 10.8 7.5-4.4M8.2 13.2l7.5 4.4"></path></svg></button><span class="share-status" aria-live="polite"></span></div>
           <div class="post-card-body">
-            <a class="post-main" href="{{ post.url | relative_url }}"><span class="post-title">{{ post.title }}</span></a>
+            {% if format == 'article' or format == 'blog' or format == 'youtube' %}<a class="post-main" href="{{ post.url | relative_url }}"><span class="post-title">{{ post.title }}</span></a>{% endif %}
             {% if format == 'text' or format == 'blog' %}
               <div class="post-excerpt">{{ post.excerpt | markdownify }}</div>
-            {% elsif post.description %}
-              <p class="post-description">{{ post.description }}</p>
             {% endif %}
+            {% if post.description and format != 'text' %}<p class="post-description">{{ post.description }}</p>{% endif %}
+            {% if format == 'article' or format == 'blog' %}<a class="continue-link" href="{{ post.url | relative_url }}">Read more <span aria-hidden="true">→</span></a>{% endif %}
           </div>
+          {% if format == 'youtube' and post.youtube_id %}<div class="feed-video"><iframe src="https://www.youtube-nocookie.com/embed/{{ post.youtube_id | escape }}" title="{{ post.title | escape }}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>{% endif %}
+          {% if post.image %}{% if format == 'article' or format == 'blog' or format == 'youtube' %}<a class="post-media" href="{{ post.url | relative_url }}"><img src="{{ post.image | relative_url }}" alt="{{ post.image_alt | default: post.title | escape }}" loading="lazy"></a>{% else %}<div class="post-media"><img src="{{ post.image | relative_url }}" alt="{{ post.image_alt | default: post.title | escape }}" loading="lazy"></div>{% endif %}{% endif %}
         </article>
       {% endfor %}
       <p class="empty-state" id="empty-state" hidden>No posts match those filters. Try another search.</p>

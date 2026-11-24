@@ -1,14 +1,26 @@
 (() => {
-  const filterButton = document.getElementById('filter-toggle');
-  const filters = document.getElementById('filters');
-  if (filterButton && filters) {
-    filterButton.addEventListener('click', () => {
-      const isOpen = filterButton.getAttribute('aria-expanded') !== 'true';
-      filterButton.setAttribute('aria-expanded', String(isOpen));
-      filterButton.setAttribute('aria-label', isOpen ? 'Hide filters' : 'Show filters');
-      filters.hidden = !isOpen;
+  document.querySelectorAll('.share-button').forEach(button => {
+    button.addEventListener('click', async () => {
+      const { shareUrl, shareTitle, shareText } = button.dataset;
+      const status = button.nextElementSibling;
+      try {
+        if (navigator.share) {
+          await navigator.share({ title: shareTitle, text: shareText, url: shareUrl });
+        } else if (navigator.clipboard) {
+          await navigator.clipboard.writeText(shareUrl);
+          status.textContent = 'Link copied';
+          setTimeout(() => { status.textContent = ''; }, 1800);
+        } else {
+          window.prompt('Copy this link', shareUrl);
+        }
+      } catch (error) {
+        if (error.name !== 'AbortError') {
+          status.textContent = 'Could not share';
+          setTimeout(() => { status.textContent = ''; }, 1800);
+        }
+      }
     });
-  }
+  });
 
   const rows = [...document.querySelectorAll('.post-card')];
   const search = document.getElementById('post-search');

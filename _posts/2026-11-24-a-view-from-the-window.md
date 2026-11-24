@@ -8,6 +8,4 @@ image_alt: "Blue hills beneath a bright sun"
 description: "A simple image post."
 ---
 
-![A minimal blue illustration of hills and a rising sun](/assets/sample-landscape.svg)
-
 A short caption can give an image a little context.
