@@ -1,7 +1,7 @@
 // To update the site, change the country name below and commit the change.
 // The outline is loaded automatically; no image upload is needed.
 const currentStop = {
-  country: "United States",
+  country: "United States of America",
 };
 
 const nameEl = document.querySelector("#country-name");
