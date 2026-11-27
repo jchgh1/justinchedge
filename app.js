@@ -16,10 +16,16 @@ async function showCountry() {
     if (!response.ok) throw new Error("Map data could not be loaded.");
     const world = await response.json();
     const wanted = currentStop.country.trim().toLocaleLowerCase();
+    const aliases = {
+      "united states": ["united states of america", "united states"],
+      "america": ["united states of america", "united states"],
+      "usa": ["united states of america", "united states"],
+    };
+    const acceptedNames = [wanted, ...(aliases[wanted] || [])];
     const feature = world.features.find((item) => {
       const props = item.properties;
       return [props.ADMIN, props.name, props.NAME, props.SOVEREIGNT]
-        .filter(Boolean).some((name) => name.toLocaleLowerCase() === wanted);
+        .filter(Boolean).some((name) => acceptedNames.includes(name.toLocaleLowerCase()));
     });
     if (!feature) throw new Error(`Could not find “${currentStop.country}”. Check the country name in app.js.`);
 
