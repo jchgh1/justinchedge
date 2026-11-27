@@ -1,35 +1,97 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Justin Hedge</title>
-  <style>
-    * { box-sizing:border-box; }
-    body { width:min(47ch, calc(100% - 32px)); margin:clamp(28px, 7vh, 58px) auto; color:#292d31; background:#f1f2f0; font:18px/1.7 "Palatino Linotype", "Book Antiqua", Georgia, serif; }
-    header { padding-bottom:12px; border-bottom:3px double #718296; }
-    h1 { margin:0; color:#27394c; font-size:40px; font-weight:normal; letter-spacing:-.035em; }
-    h1 a { color:inherit; text-decoration:none; }
-    nav { display:flex; flex-wrap:wrap; gap:7px; margin:17px 0 48px; padding:9px; background:#dce2e8; border:1px solid #a4b1bd; font:bold 16px/1.4 "Palatino Linotype", "Book Antiqua", Georgia, serif; }
-    nav a { display:inline-block; padding:7px 11px; color:#fff; background:#2f4866; border:2px outset #8194a8; text-decoration:none; }
-    nav a:link, nav a:visited { color:#fff; }
-    nav a:hover { color:#fff; background:#35577d; border-style:inset; }
-    nav a[aria-current="page"] { position:relative; margin-left:17px; }
-    nav a[aria-current="page"]::before { content:">>"; position:absolute; right:calc(100% + 5px); top:50%; transform:translateY(-50%); color:#2f4866; white-space:nowrap; }
-    a:link { color:#3f586e; } a:visited { color:#5b5872; } a:hover { color:#223e5a; }
-    @media (max-width:480px) { body { margin:28px auto; font-size:17px; } nav { margin-bottom:38px; gap:6px; font-size:15px; } nav a { padding:6px 8px; } h1 { font-size:35px; } }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Justin Hedge</title>
+<style>
+  :root {
+    --cream: #F2EDE3;
+    --ink: #2B2823;
+    --ink-soft: #6B6559;
+    --line: #DCD5C4;
+    --accent: #8A7551;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: Georgia, 'Iowan Old Style', 'Palatino Linotype', serif;
+  }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 48px 24px;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 26px;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+    margin: 0 0 8px;
+  }
+
+  p {
+    font-size: 15px;
+    color: var(--ink-soft);
+    margin: 0 0 40px;
+  }
+
+  .nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .nav-btn {
+    display: block;
+    width: 100%;
+    padding: 14px 20px;
+    border: 1px solid var(--ink);
+    border-radius: 4px;
+    background: transparent;
+    color: var(--ink);
+    font-family: Georgia, serif;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .nav-btn:hover {
+    background: var(--ink);
+    color: var(--cream);
+  }
+</style>
 </head>
+
 <body>
-  <header><h1><a href="./">Justin Hedge</a></h1></header>
-  <nav aria-label="Main navigation">
-    <a href="./" aria-current="page">Home</a>
-    <a href="where/">Where is Justin?</a>
-    <a href="writings/">Writings</a>
-    <a href="photography/">Photography</a>
-    <a href="quotes/">Quotes</a>
-    <a href="about/">About</a>
+
+<div class="container">
+  <p>justinchedge@justinchedge.com</p>
+
+  <nav class="nav-list">
+    <a href="food.html" class="nav-btn">food</a>
+    <a href="jazz-fall.html" class="nav-btn">Jazz Fall</a>
+    <a href="https://jchgh1.github.io/jazzclubfilms" class="nav-btn">production site</a>
+    <a href="https://jchgh1.github.io/justinhedge" class="nav-btn">personal film site</a>
   </nav>
-  <main><p>Hi, I'm Justin. I wander and follow my interests and get bored easily. This is my webpage.</p></main>
+</div>
+
 </body>
 </html>
