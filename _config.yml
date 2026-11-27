@@ -1,0 +1,18 @@
+collections:
+  writings:
+    output: true
+    permalink: /writings/:name/
+  quotes:
+    output: true
+    permalink: /quotes/:name/
+defaults:
+  - scope:
+      path: ""
+      type: writings
+    values:
+      layout: entry
+  - scope:
+      path: ""
+      type: quotes
+    values:
+      layout: entry
