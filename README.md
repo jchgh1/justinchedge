@@ -1,20 +1,25 @@
-# Justin Hedge — personal blog
+# Where Is Justin?
 
-A small Jekyll site for GitHub Pages. Posts are Markdown files in `_posts`; the homepage builds its searchable feed from post front matter. Template source files are kept under `_includes/templates` and are not published as a website page.
+A small, static travel page for GitHub Pages. The country outline is fetched automatically from public map data, so there are no country images to upload.
 
-## Add the profile image
+## Update the location
 
-Copy `IMG_4732.jpg` from the repository into `assets/IMG_4732.jpg`. It is used automatically on every post page.
+Open `app.js` and change the `country` value near the top:
 
-## Publish on GitHub Pages
+```js
+const currentStop = {
+  country: "Japan",
+  note: "",
+};
+```
 
-1. Add these files to `github.com/jchgh1/justinchedge`.
-2. In the repository settings, open **Pages** and choose **Deploy from a branch**, then select `main` and `/ (root)`.
-3. The included `CNAME` maps the site to `justinchedge.com`. Configure the domain's DNS with the GitHub Pages records shown in the repository's Pages settings and enable HTTPS there.
-4. Add posts as `_posts/YYYY-MM-DD-short-title.md`.
+Use a country name such as `Portugal`, `Canada`, or `Japan`. Optionally add a short `note`. Save and push the change to GitHub; Pages will publish it automatically.
 
-GitHub Pages supplies the Jekyll build and the `github-pages` gem dependencies through its standard build. No database, server, or paid service is needed.
+## Publish with GitHub Pages
 
-## Post formats
+1. Put these files in the root of a GitHub repository.
+2. In the repository, open **Settings → Pages**.
+3. Under **Build and deployment**, choose **Deploy from a branch**, then select your main branch and the `/ (root)` folder.
+4. Save. GitHub will show the site address in the Pages settings after it publishes.
 
-Set `format` in the YAML front matter to `Text`, `Image`, `Article`, `Blog`, or `YouTube`. This controls the homepage filter and the label on the post. The sample Markdown starters are in `_includes/templates`; update the title, date, format, and body when using one.
+The site uses D3 Geo from jsDelivr and country boundaries from the `datasets/geo-countries` public dataset. Both are loaded in the visitor’s browser; no build step is needed.
