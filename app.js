@@ -2,19 +2,13 @@
 // The outline is loaded automatically; no image upload is needed.
 const currentStop = {
   country: "United States",
-  note: "",
-  // Optional: add a short line, for example: "Exploring Kyoto this week."
 };
 
 const nameEl = document.querySelector("#country-name");
-const noteEl = document.querySelector("#note");
 const shapeEl = document.querySelector("#country-shape");
 const messageEl = document.querySelector("#map-message");
-const svg = document.querySelector("#map");
 
 nameEl.textContent = currentStop.country;
-noteEl.textContent = currentStop.note;
-document.querySelector("#map-label").textContent = currentStop.country.toLocaleUpperCase();
 
 async function showCountry() {
   try {
@@ -37,7 +31,7 @@ async function showCountry() {
       return `<path d="${path(polygon)}"></path>`;
     }).join("");
     messageEl.hidden = true;
-    document.querySelector("#map-desc").textContent = `The outline of ${currentStop.country}.`;
+    document.querySelector("#map").setAttribute("aria-label", `Outline of ${currentStop.country}`);
   } catch (error) {
     messageEl.textContent = error.message || "The map could not be loaded. Please try again later.";
   }

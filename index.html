@@ -4,36 +4,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f4f0e8">
-  <meta name="description" content="Where Is Justin? A little map of wherever Justin is now.">
   <title>Where Is Justin?</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="page">
-    <header class="topline"><span class="dot" aria-hidden="true"></span><span>JUSTIN’S TRAVEL LOG</span></header>
-    <section class="hero" aria-labelledby="title">
-      <div class="copy">
-        <p class="eyebrow">A little update from the road</p>
-        <h1 id="title">Where Is<br>Justin<span class="question">?</span></h1>
-        <div class="location"><span class="pin" aria-hidden="true">✳</span><div><p class="label">RIGHT NOW, HE’S IN</p><h2 id="country-name">Loading…</h2></div></div>
-        <p class="note" id="note"></p>
-      </div>
-      <div class="map-wrap" aria-label="Map showing the country Justin is visiting">
-        <div class="map-caption"><span class="caption-line"></span><span id="map-label">CURRENT STOP</span></div>
-        <svg id="map" viewBox="0 0 700 520" role="img" aria-labelledby="map-title map-desc">
-          <title id="map-title">Country outline</title><desc id="map-desc">The outline of Justin’s current country.</desc>
-          <defs><pattern id="dots" width="12" height="12" patternUnits="userSpaceOnUse"><circle cx="1.4" cy="1.4" r="1.2" fill="#d9d3c8"/></pattern></defs>
-          <rect width="700" height="520" fill="url(#dots)" />
-          <g id="country-shape"></g>
-        </svg>
-        <div id="map-message" class="map-message">Finding the map…</div>
-        <div class="map-footer"><span>✳</span> ONE COUNTRY AT A TIME</div>
-      </div>
-    </section>
-    <footer><span>THE WORLD IS A BIG PLACE.</span><span>MORE SOON <b>↗</b></span></footer>
+    <h1>Where Is Justin?</h1>
+    <h2 id="country-name">Loading…</h2>
+    <div class="map-wrap">
+      <svg id="map" viewBox="0 0 700 520" role="img" aria-label="Country outline">
+        <g id="country-shape"></g>
+      </svg>
+      <p id="map-message">Loading map…</p>
+    </div>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/d3-geo@3"></script>
   <script src="app.js"></script>
